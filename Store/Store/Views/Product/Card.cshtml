@@ -1,0 +1,82 @@
+﻿
+@model IEnumerable<Store.Models.Card>
+
+
+@{
+    ViewBag.Title = "Card";
+}
+
+<h4>Shopping Card</h4>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <span>Your shopping card is empty.</span><br /><br />
+    <div class="clear"></div>
+    @Html.ActionLink("Back to List", "Index")
+
+}
+else
+{
+    <div class="item">
+
+        <div class="title-card">
+            Product name
+        </div>
+        <div class="count-card">
+            Price
+        </div>
+        <div class="count-card">
+            Count
+        </div>
+        <div class="count-card">
+            Sum
+        </div>
+        <div class="count-card">
+
+        </div>
+    </div>
+
+    foreach (var item in Model)
+    {
+        <div class="item" id="@item.ProductId">
+
+            <div class="title-card">
+                @Html.ActionLink(item.ProductName, "Details", "Product", new { id = item.ProductId }, null)
+            </div>
+            <div class="count-card price-div">
+                @item.Price
+            </div>
+            <div class="count-card count-div">
+                @Html.TextBox("count", item.Count, new { @class = "t1" })
+            </div>
+            <div class="count-card sum">
+                @item.Sum
+            </div>
+            <div class="count-card">
+                @Html.ActionLink("Remove", "RemoveFromCard", "Product", item, null)
+            </div>
+        </div>
+    }
+    <div class="clear"></div>
+
+    @*<div style="padding:20px" id="total">
+        Total: <span></span>
+    </div>*@
+    <div class="clear"></div>
+    <br />
+    using (Html.BeginForm("Checkout", "Product"))
+    {
+        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="Checkout" />
+    }
+
+}
+
+<script>
+    $(".t1").keyup(function () {
+        var id = $(this).closest(".item").attr("id");
+        var count = $(this).closest("#" + id + " .count-div input").val();
+        var price = $(document).find("#" + id + " .price-div").text();
+        $(document).find("#" + id + " .sum").text(parseInt(count) * parseInt(price));
+    })
+</script>

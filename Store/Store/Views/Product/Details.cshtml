@@ -1,0 +1,59 @@
+﻿@model Store.Models.ProductDetailVM 
+
+@{
+    ViewBag.Title = Model.ProductName + "Details";
+}
+
+<h2></h2>
+
+<div>
+    <h4> @Html.DisplayFor(model => model.ProductName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductSummary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductSummary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductSpecification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductSpecification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt></dt>
+        <dd>@Html.ActionLink("Add to card", "AddToCard", "Product", Model, null)</dd>
+
+        @foreach(var img in Model.Images)
+        {
+        <div class="detail-item">
+            <img src="~/Images/@img.ImagePath" />
+        </div>
+        }
+    </dl>
+</div>
+<p class="clear">
+    @Html.ActionLink("Back to List", "Index")
+</p>

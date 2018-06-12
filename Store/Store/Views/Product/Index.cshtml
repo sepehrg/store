@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Store.Models.ProductListVM>
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h4>Product List</h4>
+
+
+@if (Request.QueryString["purchased"] != null)
+{
+
+    <script>
+        $(document).ready(function () {
+            alert("Your have successfully purchased your items.")
+        });
+    </script>
+}
+
+
+@foreach (var item in Model)
+{
+    <div class="item">
+        <div class="list-image">
+            <a href="/Product/Details/@item.ProductId">
+                <img src="~/Images/@item.Images.ImagePath" />
+            </a>
+        </div>
+        <div class="title">
+            @Html.ActionLink(item.ProductName, "Details", "Product", new { id = item.ProductId }, null)
+
+            <span class="summary">
+                <br />
+                @Html.DisplayFor(modelItem => item.ProductSummary)
+            </span>
+        </div>
+
+        <div class="price">
+            @Html.DisplayFor(modelItem => item.Price) $<br />
+            <span>Quantity: </span> @Html.DisplayFor(modelItem => item.Quantity)
+            <br />
+            @Html.ActionLink("Add to card", "AddToCard", "Product", item, null)
+        </div>
+    </div>
+}
